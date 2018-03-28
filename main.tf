@@ -38,6 +38,8 @@ resource "aws_autoscaling_group" "main" {
   vpc_zone_identifier       = "${var.asg_vpc_zone_identifier}"
   launch_configuration      = "${aws_launch_configuration.app.name}"
   target_group_arns         = ["${var.asg_lb_target_group_arn}"]
+  service_linked_role_arn   = "${var.asg_service_linked_role_arn}"
+  termination_policies      = ["${var.asg_termination_policies}"]
 
   tags = [
     "${var.asg_tags}",

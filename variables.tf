@@ -67,6 +67,20 @@ variable "asg_health_check_grace_period" {
   description = "Time, in seconds, to wait for new instances before checking their health"
 }
 
+variable "asg_service_linked_role_arn" {
+  default     = ""
+  description = "The ARN of the service-linked role that the ASG will use to call other AWS services"
+}
+
+variable "asg_termination_policies" {
+  default = [
+    "OldestLaunchConfiguration",
+    "Default",
+  ]
+
+  description = "Specify policies that the auto scaling group should use to terminate its instances"
+}
+
 variable "asg_tags" {
   default     = []
   description = "the created ASGs will have these tags"
