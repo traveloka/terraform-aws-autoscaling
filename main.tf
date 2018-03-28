@@ -27,16 +27,16 @@ resource "aws_launch_configuration" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  name                      = "${aws_launch_configuration.app.name}"
+  name                      = "${aws_launch_configuration.main.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
-  desired_capacity          = "${max(1,var.asg_desired_capacity)}"
-  wait_for_elb_capacity     = "${max(1,var.asg_desired_capacity)}"
+  desired_capacity          = "${max(1, var.asg_desired_capacity)}"
+  wait_for_elb_capacity     = "${max(1, var.asg_desired_capacity)}"
   wait_for_capacity_timeout = "${var.asg_wait_timeout}"
   health_check_type         = "${var.asg_health_check_type}"
   health_check_grace_period = "${var.asg_health_check_grace_period}"
   vpc_zone_identifier       = "${var.asg_vpc_zone_identifier}"
-  launch_configuration      = "${aws_launch_configuration.app.name}"
+  launch_configuration      = "${aws_launch_configuration.main.name}"
   target_group_arns         = ["${var.asg_lb_target_group_arn}"]
   service_linked_role_arn   = "${var.asg_service_linked_role_arn}"
   termination_policies      = ["${var.asg_termination_policies}"]
