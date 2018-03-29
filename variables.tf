@@ -1,15 +1,3 @@
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-#     http://www.apache.org/licenses/LICENSE-2.0
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 variable "tag_service_name" {
   type        = "string"
   description = "the name of the service"
@@ -27,32 +15,27 @@ variable "tag_environment" {
 
 variable "asg_vpc_zone_identifier" {
   type        = "list"
-  description = "the created ASGs will spawn instances to these subnet IDs"
+  description = "the created ASG will spawn instances to these subnet IDs"
 }
 
-variable "asg_lb_target_group_arn" {
-  type        = "string"
-  description = "the created ASGs will be attached to this target group"
+variable "asg_lb_target_group_arns" {
+  default     = []
+  description = "the created ASG will be attached to this target group"
 }
 
 variable "asg_min_capacity" {
   default     = 1
-  description = "the created ASGs will have this number of instances at minimum"
-}
-
-variable "asg_desired_capacity" {
-  type        = "string"
-  description = "the created ASGs will be spawned initially with this capacity"
+  description = "the created ASG will have this number of instances at minimum"
 }
 
 variable "asg_max_capacity" {
   default     = 5
-  description = "the created ASGs will have this number of instances at maximum"
+  description = "the created ASG will have this number of instances at maximum"
 }
 
 variable "asg_wait_timeout" {
   type        = "string"
-  description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
+  description = "a maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
 }
 
 variable "asg_health_check_type" {
@@ -63,18 +46,47 @@ variable "asg_health_check_type" {
 
 variable "asg_health_check_grace_period" {
   type        = "string"
-  default     = "300"
-  description = "Time, in seconds, to wait for new instances before checking their health"
+  default     = 300
+  description = "time, in seconds, to wait for new instances before checking their health"
+}
+
+variable "asg_default_cooldown" {
+  default     = 300
+  description = "time, in seconds, the minimum interval of two scaling activities"
+}
+
+variable "asg_placement_group" {
+  default     = ""
+  description = "the placement group for the spawned instances"
+}
+
+variable "asg_metrics_granularity" {
+  default     = "1Minute"
+  description = "the granularity to associate with the metrics to collect"
+}
+
+variable "asg_enabled_metrics" {
+  default = [
+    "GroupMinSize",
+    "GroupMaxSize",
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances",
+    "GroupPendingInstances",
+    "GroupStandbyInstances",
+    "GroupTerminatingInstances",
+    "GroupTotalInstances",
+  ]
+
+  description = "the list of ASG metrics to collect"
 }
 
 variable "asg_service_linked_role_arn" {
   default     = ""
-  description = "The ARN of the service-linked role that the ASG will use to call other AWS services"
+  description = "the ARN of the service-linked role that the ASG will use to call other AWS services"
 }
 
 variable "asg_termination_policies" {
   default = [
-    "OldestLaunchConfiguration",
     "Default",
   ]
 
@@ -83,45 +95,45 @@ variable "asg_termination_policies" {
 
 variable "asg_tags" {
   default     = []
-  description = "the created ASGs will have these tags"
+  description = "the created ASG will have these tags"
 }
 
-variable "lc_instance_sgs" {
+variable "lc_sgs" {
   type        = "list"
-  description = "the created instances will spawn instances with these security groups"
+  description = "the spawned instances will have these security groups"
 }
 
-variable "lc_instance_profile" {
+variable "lc_profile" {
   type        = "string"
-  description = "the created instances will spawn instances with this IAM profile"
+  description = "the spawned instances will have this IAM profile"
 }
 
-variable "lc_instance_key_name" {
+variable "lc_key_name" {
   default     = ""
-  description = "the created instances will spawn instances with this SSH key name"
+  description = "the spawned instances will have this SSH key name"
 }
 
-variable "lc_instance_type" {
+variable "lc_type" {
   type        = "string"
-  description = "the created instances will spawn instances with this type"
+  description = "the spawned instances will have this type"
 }
 
-variable "lc_instance_ami_id" {
+variable "lc_ami_id" {
   type        = "string"
-  description = "the created instances will spawn instances with this AMI"
+  description = "the spawned instances will have this AMI"
 }
 
-variable "lc_instance_monitoring" {
+variable "lc_monitoring" {
   default     = true
-  description = "the created instances will spawn instances with enhanced monitoring if enabled"
+  description = "the spawned instances will have enhanced monitoring if enabled"
 }
 
-variable "lc_instance_ebs_optimized" {
+variable "lc_ebs_optimized" {
   default     = true
-  description = "the created instances will spawn EBS optimized instances if enabled"
+  description = "the spawned instances will have EBS optimization if enabled"
 }
 
-variable "lc_instance_user_data" {
+variable "lc_user_data" {
   default     = ""
-  description = "The user data to launch instances with. Use the value of data.template_cloudinit_config.rendered" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
+  description = "the spawned instances will have this user data. Use the rendered value of a terraform's `template_cloudinit_config` data" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
 }
