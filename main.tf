@@ -43,6 +43,24 @@ resource "aws_autoscaling_group" "main" {
   termination_policies      = ["${var.asg_termination_policies}"]
 
   tags = [
+    {
+      key                 = "Service"
+      value               = "${var.tag_service_name}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Cluster"
+      value               = "${var.tag_service_name}-${var.tag_cluster_role}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Environment"
+      value               = "${var.tag_environment}"
+      propagate_at_launch = true
+    },
+  ]
+
+  tags = [
     "${var.asg_tags}",
   ]
 
