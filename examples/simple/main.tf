@@ -6,6 +6,7 @@ module "autoscaling-deployment" {
   source                  = "../.."
   tag_service_name        = "fprbe"
   tag_environment         = "staging"
+  tag_product_domain      = "fprbe"
   asg_min_capacity        = 2
   asg_vpc_zone_identifier = []
 

@@ -15,7 +15,7 @@ resource "random_id" "main" {
 }
 
 resource "aws_launch_configuration" "main" {
-  name_prefix          = "${random_id.main.b64_url}"
+  name                 = "${random_id.main.b64_url}"
   image_id             = "${var.lc_ami_id}"
   instance_type        = "${var.lc_type}"
   iam_instance_profile = "${var.lc_profile}"
@@ -56,6 +56,11 @@ resource "aws_autoscaling_group" "main" {
     {
       key                 = "Environment"
       value               = "${var.tag_environment}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "ProductDomain"
+      value               = "${var.tag_product_domain}"
       propagate_at_launch = true
     },
   ]
