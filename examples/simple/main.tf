@@ -4,9 +4,9 @@ provider "aws" {
 
 module "autoscaling-deployment" {
   source                  = "../.."
-  tag_service_name        = "flight"
+  tag_service_name        = "fprbe"
   tag_environment         = "staging"
-  asg_min_capacity        = 0
+  asg_min_capacity        = 2
   asg_vpc_zone_identifier = []
 
   asg_tags = [
@@ -17,7 +17,7 @@ module "autoscaling-deployment" {
     },
     {
       key                 = "ServiceVersion"
-      value               = "1.0.0"
+      value               = "0.1.0"
       propagate_at_launch = true
     },
   ]
