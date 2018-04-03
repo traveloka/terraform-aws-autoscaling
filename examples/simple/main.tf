@@ -4,11 +4,13 @@ provider "aws" {
 
 module "autoscaling-deployment" {
   source                  = "../.."
-  tag_service_name        = "fprbe"
-  tag_environment         = "staging"
-  tag_product_domain      = "fprbe"
+  service_name            = "fprbe"
+  environment             = "staging"
+  application             = "java-7"
+  product_domain          = "fprbe"
+  description             = "fprbe instances"
   asg_min_capacity        = 2
-  asg_vpc_zone_identifier = []
+  asg_vpc_zone_identifier = ["subnet-8ef0d153"]
 
   asg_tags = [
     {

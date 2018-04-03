@@ -1,30 +1,30 @@
-variable "tag_service_name" {
+variable "service_name" {
   type        = "string"
   description = "The name of the service"
 }
 
-variable "tag_cluster_role" {
+variable "cluster_role" {
   type        = "string"
   default     = "app"
   description = "Primary role/function of the cluster"
 }
 
-variable "tag_environment" {
+variable "environment" {
   type        = "string"
   description = "The created resources will belong to this infrastructure environment"
 }
 
-variable "tag_application" {
+variable "application" {
   type        = "string"
   description = "Application type that the ASG's instances will serve"
 }
 
-variable "tag_product_domain" {
+variable "product_domain" {
   type        = "string"
   description = "Abbreviation of the product domain this ASG and its instances belongs to"
 }
 
-variable "tag_description" {
+variable "description" {
   type        = "string"
   description = "Free form description of this ASG and its instances"
 }
@@ -160,7 +160,7 @@ variable "lc_monitoring" {
 
 variable "lc_ebs_optimized" {
   type        = "string"
-  default     = true
+  default     = false
   description = "The spawned instances will have EBS optimization if enabled"
 }
 

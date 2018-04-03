@@ -11,7 +11,7 @@ resource "random_id" "main" {
   }
 
   byte_length = 8
-  prefix      = "${var.tag_service_name}-${var.tag_cluster_role}-${var.tag_environment}-"
+  prefix      = "${var.service_name}-${var.cluster_role}-${var.environment}-"
 }
 
 resource "aws_launch_configuration" "main" {
@@ -45,37 +45,37 @@ resource "aws_autoscaling_group" "main" {
   tags = [
     {
       key                 = "Name"
-      value               = "${var.tag_service_name}-${var.tag_cluster_role}"
+      value               = "${var.service_name}-${var.cluster_role}"
       propagate_at_launch = true
     },
     {
       key                 = "Service"
-      value               = "${var.tag_service_name}"
+      value               = "${var.service_name}"
       propagate_at_launch = true
     },
     {
       key                 = "Cluster"
-      value               = "${var.tag_service_name}-${var.tag_cluster_role}"
+      value               = "${var.service_name}-${var.cluster_role}"
       propagate_at_launch = true
     },
     {
       key                 = "Environment"
-      value               = "${var.tag_environment}"
+      value               = "${var.environment}"
       propagate_at_launch = true
     },
     {
       key                 = "ProductDomain"
-      value               = "${var.tag_product_domain}"
+      value               = "${var.product_domain}"
       propagate_at_launch = true
     },
     {
       key                 = "Application"
-      value               = "${var.tag_application}"
+      value               = "${var.application}"
       propagate_at_launch = true
     },
     {
       key                 = "Description"
-      value               = "${var.tag_description}"
+      value               = "${var.description}"
       propagate_at_launch = true
     },
   ]
