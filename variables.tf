@@ -14,9 +14,19 @@ variable "tag_environment" {
   description = "The created resources will belong to this infrastructure environment"
 }
 
+variable "tag_application" {
+  type        = "string"
+  description = "Application type that the ASG's instances will serve"
+}
+
 variable "tag_product_domain" {
   type        = "string"
   description = "Abbreviation of the product domain this ASG and its instances belongs to"
+}
+
+variable "tag_description" {
+  type        = "string"
+  description = "Free form description of this ASG and its instances"
 }
 
 variable "asg_vpc_zone_identifier" {

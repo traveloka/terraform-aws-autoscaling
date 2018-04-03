@@ -44,6 +44,11 @@ resource "aws_autoscaling_group" "main" {
 
   tags = [
     {
+      key                 = "Name"
+      value               = "${var.tag_service_name}-${var.tag_cluster_role}"
+      propagate_at_launch = true
+    },
+    {
       key                 = "Service"
       value               = "${var.tag_service_name}"
       propagate_at_launch = true
@@ -61,6 +66,16 @@ resource "aws_autoscaling_group" "main" {
     {
       key                 = "ProductDomain"
       value               = "${var.tag_product_domain}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Application"
+      value               = "${var.tag_application}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "Description"
+      value               = "${var.tag_description}"
       propagate_at_launch = true
     },
   ]
