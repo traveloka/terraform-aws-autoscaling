@@ -10,7 +10,7 @@ module "autoscaling-deployment" {
   product_domain          = "fprbe"
   description             = "fprbe instances"
   asg_min_capacity        = 2
-  asg_vpc_zone_identifier = ["subnet-8270c2e6"]
+  asg_vpc_zone_identifier = ["subnet-8270c222"]
 
   asg_tags = [
     {
