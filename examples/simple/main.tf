@@ -10,7 +10,7 @@ module "autoscaling-deployment" {
   product_domain          = "fprbe"
   description             = "fprbe instances"
   asg_min_capacity        = 2
-  asg_vpc_zone_identifier = ["subnet-8ef0d153"]
+  asg_vpc_zone_identifier = ["subnet-8270c2e6"]
 
   asg_tags = [
     {
@@ -28,8 +28,8 @@ module "autoscaling-deployment" {
   asg_health_check_grace_period = 30
   asg_health_check_type         = "EC2"
   asg_wait_timeout              = "4m"
-  lc_sgs                        = []
-  lc_profile                    = ""
-  lc_type                       = "t2.medium"
+  lc_security_groups            = []
+  lc_instance_profile           = ""
+  lc_instance_type              = "t2.medium"
   lc_ami_id                     = "ami-9893cee4"
 }

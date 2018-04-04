@@ -1,13 +1,14 @@
-resource "random_id" "main" {
+resource "random_id" "lc_name" {
+  # This is so that the name will be changed if any of these changes
   keepers = {
-    lc_sgs           = "${join(",",sort(var.lc_sgs))}"
-    lc_profile       = "${var.lc_profile}"
-    lc_key_name      = "${var.lc_key_name}"
-    lc_type          = "${var.lc_type}"
-    lc_ami_id        = "${var.lc_ami_id}"
-    lc_monitoring    = "${var.lc_monitoring}"
-    lc_ebs_optimized = "${var.lc_ebs_optimized}"
-    lc_user_data     = "${var.lc_user_data}"
+    lc_security_groups  = "${join(",",sort(var.lc_security_groups))}"
+    lc_instance_profile = "${var.lc_instance_profile}"
+    lc_key_name         = "${var.lc_key_name}"
+    lc_instance_type    = "${var.lc_instance_type}"
+    lc_ami_id           = "${var.lc_ami_id}"
+    lc_monitoring       = "${var.lc_monitoring}"
+    lc_ebs_optimized    = "${var.lc_ebs_optimized}"
+    lc_user_data        = "${var.lc_user_data}"
   }
 
   byte_length = 8
@@ -15,12 +16,12 @@ resource "random_id" "main" {
 }
 
 resource "aws_launch_configuration" "main" {
-  name                 = "${random_id.main.b64_url}"
+  name                 = "${random_id.lc_name.hex}"
   image_id             = "${var.lc_ami_id}"
-  instance_type        = "${var.lc_type}"
-  iam_instance_profile = "${var.lc_profile}"
+  instance_type        = "${var.lc_instance_type}"
+  iam_instance_profile = "${var.lc_instance_profile}"
   key_name             = "${var.lc_key_name}"
-  security_groups      = ["${var.lc_sgs}"]
+  security_groups      = ["${var.lc_security_groups}"]
   user_data            = "${var.lc_user_data}"
   enable_monitoring    = "${var.lc_monitoring}"
   ebs_optimized        = "${var.lc_ebs_optimized}"

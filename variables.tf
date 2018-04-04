@@ -126,12 +126,12 @@ variable "asg_tags" {
   description = "The created ASG (and spawned instances) will have these tags, merged over the default (see main.tf)"
 }
 
-variable "lc_sgs" {
+variable "lc_security_groups" {
   type        = "list"
   description = "The spawned instances will have these security groups"
 }
 
-variable "lc_profile" {
+variable "lc_instance_profile" {
   type        = "string"
   description = "The spawned instances will have this IAM profile"
 }
@@ -142,7 +142,7 @@ variable "lc_key_name" {
   description = "The spawned instances will have this SSH key name"
 }
 
-variable "lc_type" {
+variable "lc_instance_type" {
   type        = "string"
   description = "The spawned instances will have this type"
 }
