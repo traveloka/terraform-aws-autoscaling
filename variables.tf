@@ -126,6 +126,12 @@ variable "asg_tags" {
   description = "The created ASG (and spawned instances) will have these tags, merged over the default (see main.tf)"
 }
 
+variable "asg_wait_for_elb_capacity" {
+  type        = "string"
+  default     = -1
+  description = "Terraform will wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. If left to default, the value is set to asg_min_capacity"
+}
+
 variable "lc_security_groups" {
   type        = "list"
   description = "The spawned instances will have these security groups"
