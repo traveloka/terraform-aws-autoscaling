@@ -52,11 +52,6 @@ variable "asg_max_capacity" {
   description = "The created ASG will have this number of instances at maximum"
 }
 
-variable "asg_wait_timeout" {
-  type        = "string"
-  description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
-}
-
 variable "asg_health_check_type" {
   type        = "string"
   default     = "ELB"
@@ -126,9 +121,14 @@ variable "asg_tags" {
   description = "The created ASG (and spawned instances) will have these tags, merged over the default (see main.tf)"
 }
 
+variable "asg_wait_for_capacity_timeout" {
+  type        = "string"
+  description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out"
+}
+
 variable "asg_wait_for_elb_capacity" {
   type        = "string"
-  default     = -1
+  default     = ""
   description = "Terraform will wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. If left to default, the value is set to asg_min_capacity"
 }
 

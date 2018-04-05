@@ -27,7 +27,7 @@ module "autoscaling-deployment" {
 
   asg_health_check_grace_period = 30
   asg_health_check_type         = "EC2"
-  asg_wait_timeout              = "4m"
+  asg_wait_for_capacity_timeout = "4m"
   lc_security_groups            = []
   lc_instance_profile           = ""
   lc_instance_type              = "t2.medium"
