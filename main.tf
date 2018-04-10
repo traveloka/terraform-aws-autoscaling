@@ -17,7 +17,7 @@ resource "random_id" "lc_name" {
   }
 
   byte_length = 8
-  prefix      = "${var.service_name}-${var.cluster_role}-${var.environment}-"
+  prefix      = "${var.service_name}-${var.cluster_role}-"
 }
 
 resource "aws_launch_configuration" "main" {
