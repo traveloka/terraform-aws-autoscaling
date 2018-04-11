@@ -44,7 +44,7 @@ resource "aws_autoscaling_group" "main" {
   launch_configuration      = "${aws_launch_configuration.main.name}"
   health_check_grace_period = "${var.asg_health_check_grace_period}"
   health_check_type         = "${var.asg_health_check_type}"
-  vpc_zone_identifier       = "${var.asg_vpc_zone_identifier}"
+  vpc_zone_identifier       = ["${var.asg_vpc_zone_identifier}"]
   target_group_arns         = ["${var.asg_lb_target_group_arns}"]
   termination_policies      = ["${var.asg_termination_policies}"]
 
