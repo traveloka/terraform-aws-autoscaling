@@ -6,7 +6,7 @@ locals {
 module "random_lc" {
   source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
 
-  name_prefix   = "${var.service_name}-${var.cluster_role}-"
+  name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
 
   keepers = {
