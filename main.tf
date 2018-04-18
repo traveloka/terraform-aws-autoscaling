@@ -3,8 +3,12 @@ locals {
   asg_wait_for_elb_capacity = "${var.asg_wait_for_elb_capacity == "" ? var.asg_min_capacity : var.asg_wait_for_elb_capacity}"
 }
 
-resource "random_id" "lc_name" {
-  # This is so that the name will be changed if any of these changes
+module "random_lc" {
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.6.0"
+
+  name_prefix   = "${var.service_name}-${var.cluster_role}-"
+  resource_type = "launch_configuration"
+
   keepers = {
     lc_security_groups  = "${join(",",sort(var.lc_security_groups))}"
     lc_instance_profile = "${var.lc_instance_profile}"
@@ -15,13 +19,10 @@ resource "random_id" "lc_name" {
     lc_ebs_optimized    = "${var.lc_ebs_optimized}"
     lc_user_data        = "${var.lc_user_data}"
   }
-
-  byte_length = 8
-  prefix      = "${var.service_name}-${var.cluster_role}-"
 }
 
 resource "aws_launch_configuration" "main" {
-  name                 = "${random_id.lc_name.hex}"
+  name                 = "${module.random_lc.name}"
   image_id             = "${var.lc_ami_id}"
   instance_type        = "${var.lc_instance_type}"
   iam_instance_profile = "${var.lc_instance_profile}"
@@ -51,7 +52,7 @@ resource "aws_autoscaling_group" "main" {
   tags = [
     {
       key                 = "Name"
-      value               = "${var.service_name}-${var.cluster_role}"
+      value               = "${aws_launch_configuration.main.name}"
       propagate_at_launch = true
     },
     {
@@ -82,6 +83,11 @@ resource "aws_autoscaling_group" "main" {
     {
       key                 = "Description"
       value               = "${var.description}"
+      propagate_at_launch = true
+    },
+    {
+      key                 = "ManagedBy"
+      value               = "Terraform"
       propagate_at_launch = true
     },
   ]
