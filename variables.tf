@@ -175,3 +175,20 @@ variable "lc_user_data" {
   default     = ""
   description = "The spawned instances will have this user data. Use the rendered value of a terraform's `template_cloudinit_config` data" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
 }
+
+variable "volume_size" {
+  description = "The size of the volume in gigabytes"
+  type        = "string"
+  default     = "8"
+}
+
+variable "volume_type" {
+  description = "The type of volume. Can be standard, gp2, or io1"
+  type        = "string"
+  default     = "gp2"
+}
+
+variable "delete_on_termination" {
+  description = "Whether the volume should be destroyed on instance termination"
+  default     = "true"
+}
