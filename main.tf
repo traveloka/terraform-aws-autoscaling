@@ -32,6 +32,12 @@ resource "aws_launch_configuration" "main" {
   enable_monitoring    = "${var.lc_monitoring}"
   ebs_optimized        = "${var.lc_ebs_optimized}"
 
+  root_block_device = {
+    volume_size           = "${var.volume_size}"
+    volume_type           = "${var.volume_type}"
+    delete_on_termination = "${var.delete_on_termination}"
+  }
+
   lifecycle {
     create_before_destroy = true
   }
