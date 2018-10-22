@@ -114,6 +114,10 @@ resource "aws_autoscaling_group" "main" {
 
     ignore_changes = [
       "launch_configuration",
+      "max_size",
+      "min_size",
+      "health_check_grace_period",
+      "health_check_type",
     ]
   }
 }
