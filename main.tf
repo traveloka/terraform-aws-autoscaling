@@ -87,7 +87,7 @@ resource "aws_autoscaling_group" "main" {
     },
     {
       key                 = "ManagedBy"
-      value               = "Terraform"
+      value               = "terraform"
       propagate_at_launch = true
     },
   ]
