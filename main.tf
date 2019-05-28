@@ -22,10 +22,16 @@ module "random_lc" {
 }
 
 resource "aws_launch_template" "main" {
-  name                   = "${module.random_lc.name}"
-  image_id               = "${var.lc_ami_id}"
-  instance_type          = "${var.lc_instance_type}"
-  iam_instance_profile   = "${var.lc_instance_profile}"
+  name          = "${module.random_lc.name}"
+  image_id      = "${var.lc_ami_id}"
+  instance_type = "${var.lc_instance_type}"
+
+  iam_instance_profile {
+    name = "${var.lc_instance_profile}"
+
+    // TODO switch to ARN, more specific
+  }
+
   key_name               = "${var.lc_key_name}"
   vpc_security_group_ids = ["${var.lc_security_groups}"]
   user_data              = "${var.lc_user_data}"
