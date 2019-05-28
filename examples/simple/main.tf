@@ -9,7 +9,7 @@ module "autoscaling-deployment" {
   application             = "java-7"
   product_domain          = "fprbe"
   description             = "fprbe instances"
-  asg_min_capacity        = 2
+  asg_min_capacity        = 0
   asg_vpc_zone_identifier = ["subnet-8270c222"]
 
   asg_tags = [

@@ -42,13 +42,13 @@ variable "asg_lb_target_group_arns" {
 
 variable "asg_min_capacity" {
   type        = "string"
-  default     = 1
+  default     = 0
   description = "The created ASG will have this number of instances at minimum"
 }
 
 variable "asg_max_capacity" {
   type        = "string"
-  default     = 5
+  default     = 0
   description = "The created ASG will have this number of instances at maximum"
 }
 
@@ -60,13 +60,13 @@ variable "asg_health_check_type" {
 
 variable "asg_health_check_grace_period" {
   type        = "string"
-  default     = 300
+  default     = "300"
   description = "Time, in seconds, to wait for new instances before checking their health"
 }
 
 variable "asg_default_cooldown" {
   type        = "string"
-  default     = 300
+  default     = "300"
   description = "Time, in seconds, the minimum interval of two scaling activities"
 }
 
@@ -160,19 +160,19 @@ variable "lc_ami_id" {
 
 variable "lc_monitoring" {
   type        = "string"
-  default     = true
+  default     = "true"
   description = "The spawned instances will have enhanced monitoring if enabled"
 }
 
 variable "lc_ebs_optimized" {
   type        = "string"
-  default     = false
+  default     = "false"
   description = "The spawned instances will have EBS optimization if enabled"
 }
 
 variable "lc_user_data" {
   type        = "string"
-  default     = ""
+  default     = " "
   description = "The spawned instances will have this user data. Use the rendered value of a terraform's `template_cloudinit_config` data" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
 }
 

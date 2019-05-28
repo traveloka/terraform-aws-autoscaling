@@ -21,44 +21,51 @@ module "random_lc" {
   }
 }
 
-resource "aws_launch_configuration" "main" {
-  name                 = "${module.random_lc.name}"
-  image_id             = "${var.lc_ami_id}"
-  instance_type        = "${var.lc_instance_type}"
-  iam_instance_profile = "${var.lc_instance_profile}"
-  key_name             = "${var.lc_key_name}"
-  security_groups      = ["${var.lc_security_groups}"]
-  user_data            = "${var.lc_user_data}"
-  enable_monitoring    = "${var.lc_monitoring}"
-  ebs_optimized        = "${var.lc_ebs_optimized}"
+resource "aws_launch_template" "main" {
+  name                   = "${module.random_lc.name}"
+  image_id               = "${var.lc_ami_id}"
+  instance_type          = "${var.lc_instance_type}"
+  iam_instance_profile   = "${var.lc_instance_profile}"
+  key_name               = "${var.lc_key_name}"
+  vpc_security_group_ids = ["${var.lc_security_groups}"]
+  user_data              = "${var.lc_user_data}"
 
-  root_block_device = {
-    volume_size           = "${var.volume_size}"
-    volume_type           = "${var.volume_type}"
-    delete_on_termination = "${var.delete_on_termination}"
+  monitoring {
+    enabled = true
   }
 
-  lifecycle {
-    create_before_destroy = true
+  block_device_mappings {
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_size           = "${var.volume_size}"
+      volume_size           = "${var.volume_size}"
+      volume_type           = "${var.volume_type}"
+      delete_on_termination = "${var.delete_on_termination}"
+    }
   }
 }
 
 resource "aws_autoscaling_group" "main" {
-  name                      = "${aws_launch_configuration.main.name}"
+  name                      = "${module.random_lc.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
-  launch_configuration      = "${aws_launch_configuration.main.name}"
   health_check_grace_period = "${var.asg_health_check_grace_period}"
   health_check_type         = "${var.asg_health_check_type}"
   vpc_zone_identifier       = ["${var.asg_vpc_zone_identifier}"]
   target_group_arns         = ["${var.asg_lb_target_group_arns}"]
   termination_policies      = ["${var.asg_termination_policies}"]
 
+  launch_template {
+    id      = "${aws_launch_template.main.id}"
+    version = "$Latest"
+  }
+
   tags = [
     {
       key                 = "Name"
-      value               = "${aws_launch_configuration.main.name}"
+      value               = "${module.random_lc.name}"
       propagate_at_launch = true
     },
     {
@@ -93,7 +100,7 @@ resource "aws_autoscaling_group" "main" {
     },
     {
       key                 = "ManagedBy"
-      value               = "Terraform"
+      value               = "terraform"
       propagate_at_launch = true
     },
   ]
