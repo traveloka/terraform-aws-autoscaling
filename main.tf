@@ -8,17 +8,6 @@ module "random_lc" {
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
-
-  keepers = {
-    lc_security_groups  = "${join(",",sort(var.lc_security_groups))}"
-    lc_instance_profile = "${var.lc_instance_profile}"
-    lc_key_name         = "${var.lc_key_name}"
-    lc_instance_type    = "${var.lc_instance_type}"
-    lc_ami_id           = "${var.lc_ami_id}"
-    lc_monitoring       = "${var.lc_monitoring}"
-    lc_ebs_optimized    = "${var.lc_ebs_optimized}"
-    lc_user_data        = "${var.lc_user_data}"
-  }
 }
 
 resource "aws_launch_template" "main" {
