@@ -3,7 +3,7 @@ locals {
   asg_wait_for_elb_capacity = "${var.asg_wait_for_elb_capacity == "" ? var.asg_min_capacity : var.asg_wait_for_elb_capacity}"
 }
 
-module "random_lc" {
+module "random_name" {
   source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.16.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
@@ -11,29 +11,30 @@ module "random_lc" {
 }
 
 resource "aws_launch_template" "main" {
-  name          = "${module.random_lc.name}"
-  image_id      = "${var.lc_ami_id}"
-  instance_type = "${var.lc_instance_type}"
+  name          = "${module.random_name.name}"
+  image_id      = "${var.ami_id}"
+  instance_type = "${var.instance_type}"
 
   iam_instance_profile {
-    name = "${var.lc_instance_profile}"
+    name = "${var.instance_profile}"
 
     // TODO switch to ARN, more specific
   }
 
-  key_name               = "${var.lc_key_name}"
-  vpc_security_group_ids = ["${var.lc_security_groups}"]
-  user_data              = "${var.lc_user_data}"
+  key_name               = "${var.key_name}"
+  vpc_security_group_ids = ["${var.security_groups}"]
+  user_data              = "${var.user_data}"
 
   monitoring {
-    enabled = true
+    enabled = "${var.monitoring}"
   }
+
+  ebs_optimized = "${var.ebs_optimized}"
 
   block_device_mappings {
     device_name = "/dev/sda1"
 
     ebs {
-      volume_size           = "${var.volume_size}"
       volume_size           = "${var.volume_size}"
       volume_type           = "${var.volume_type}"
       delete_on_termination = "${var.delete_on_termination}"
@@ -42,7 +43,7 @@ resource "aws_launch_template" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  name                      = "${module.random_lc.name}"
+  name                      = "${module.random_name.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
@@ -60,7 +61,7 @@ resource "aws_autoscaling_group" "main" {
   tags = [
     {
       key                 = "Name"
-      value               = "${module.random_lc.name}"
+      value               = "${module.random_name.name}"
       propagate_at_launch = true
     },
     {
@@ -98,9 +99,6 @@ resource "aws_autoscaling_group" "main" {
       value               = "terraform"
       propagate_at_launch = true
     },
-  ]
-
-  tags = [
     "${var.asg_tags}",
   ]
 
@@ -110,8 +108,4 @@ resource "aws_autoscaling_group" "main" {
   wait_for_capacity_timeout = "${var.asg_wait_for_capacity_timeout}"
   wait_for_elb_capacity     = "${local.asg_wait_for_elb_capacity}"
   service_linked_role_arn   = "${var.asg_service_linked_role_arn}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }

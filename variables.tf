@@ -118,7 +118,7 @@ variable "asg_termination_policies" {
 variable "asg_tags" {
   type        = "list"
   default     = []
-  description = "The created ASG (and spawned instances) will have these tags, merged over the default (see main.tf)"
+  description = "The created ASG (and spawned instances) will have these tags applied over the default ones (see main.tf)"
 }
 
 variable "asg_wait_for_capacity_timeout" {
@@ -132,45 +132,45 @@ variable "asg_wait_for_elb_capacity" {
   description = "Terraform will wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. If left to default, the value is set to asg_min_capacity"
 }
 
-variable "lc_security_groups" {
+variable "security_groups" {
   type        = "list"
   description = "The spawned instances will have these security groups"
 }
 
-variable "lc_instance_profile" {
+variable "instance_profile" {
   type        = "string"
   description = "The spawned instances will have this IAM profile"
 }
 
-variable "lc_key_name" {
+variable "key_name" {
   type        = "string"
   default     = ""
   description = "The spawned instances will have this SSH key name"
 }
 
-variable "lc_instance_type" {
+variable "instance_type" {
   type        = "string"
   description = "The spawned instances will have this type"
 }
 
-variable "lc_ami_id" {
+variable "ami_id" {
   type        = "string"
   description = "The spawned instances will have this AMI"
 }
 
-variable "lc_monitoring" {
+variable "monitoring" {
   type        = "string"
   default     = "true"
   description = "The spawned instances will have enhanced monitoring if enabled"
 }
 
-variable "lc_ebs_optimized" {
+variable "ebs_optimized" {
   type        = "string"
   default     = "false"
   description = "The spawned instances will have EBS optimization if enabled"
 }
 
-variable "lc_user_data" {
+variable "user_data" {
   type        = "string"
   default     = " "
   description = "The spawned instances will have this user data. Use the rendered value of a terraform's `template_cloudinit_config` data" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
