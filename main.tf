@@ -1,8 +1,3 @@
-locals {
-  # Set the wait_for_elb_capacity to asg_min_capacity if not explicitly provided
-  asg_wait_for_elb_capacity = "${var.asg_wait_for_elb_capacity == "" ? var.asg_min_capacity : var.asg_wait_for_elb_capacity}"
-}
-
 module "random_name" {
   source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.16.1"
 
@@ -12,7 +7,7 @@ module "random_name" {
 
 resource "aws_launch_template" "main" {
   name          = "${module.random_name.name}"
-  image_id      = "${var.ami_id}"
+  image_id      = "${data.aws_ami.latest_service_image.id}"
   instance_type = "${var.instance_type}"
 
   iam_instance_profile {
@@ -53,9 +48,13 @@ resource "aws_autoscaling_group" "main" {
   target_group_arns         = ["${var.asg_lb_target_group_arns}"]
   termination_policies      = ["${var.asg_termination_policies}"]
 
-  launch_template {
-    id      = "${aws_launch_template.main.id}"
-    version = "$Latest"
+  mixed_instances_policy {
+    launch_template {
+      launch_template_specification {
+        launch_template_id = "${aws_launch_template.example.id}"
+        version            = "$Latest"
+      }
+    }
   }
 
   tags = [

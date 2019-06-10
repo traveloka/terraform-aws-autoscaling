@@ -153,9 +153,9 @@ variable "instance_type" {
   description = "The spawned instances will have this type"
 }
 
-variable "ami_id" {
+variable "image_name_filter" {
   type        = "string"
-  description = "The spawned instances will have this AMI"
+  description = "The AMI name filter. The ASG will be provisioned with the most recent AMI following this name filter"
 }
 
 variable "monitoring" {
