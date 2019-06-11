@@ -16,7 +16,7 @@ resource "aws_launch_template" "main" {
 
   key_name               = "${var.key_name}"
   vpc_security_group_ids = ["${var.security_groups}"]
-  user_data              = "${var.user_data}"
+  user_data              = "${${base64encode(var.user_data)}"
 
   monitoring {
     enabled = "${var.monitoring}"
@@ -56,6 +56,7 @@ resource "aws_launch_template" "main" {
         Service       = "${var.service_name}"
         ProductDomain = "${var.product_domain}"
         Environment   = "${var.environment}"
+        ManagedBy     = "terraform"
       }
     },
   ]
