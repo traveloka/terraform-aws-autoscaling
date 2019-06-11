@@ -163,11 +163,6 @@ variable "key_name" {
   description = "The spawned instances will have this SSH key name"
 }
 
-variable "instance_type" {
-  type        = "string"
-  description = "The spawned instances will have this type"
-}
-
 variable "image_filters" {
   type        = "list"
   description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG"
