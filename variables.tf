@@ -169,8 +169,8 @@ variable "instance_type" {
 }
 
 variable "image_filters" {
-  type        = "map"
-  default     = {}
+  type        = "list"
+  default     = []
   description = "The AMI search filters. The most recent AMI that pass this filter and have the correct Service & Product Domain tag values will be selected to be deployed to the ASG"
 }
 
