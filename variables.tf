@@ -139,6 +139,9 @@ variable "launch_template_overrides" {
     {
       "instance_type" = "m5.large"
     },
+    {
+      "instance_type" = "m4.large"
+    },
   ]
 
   description = "List of nested arguments provides the ability to specify multiple instance types. See https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#override"
