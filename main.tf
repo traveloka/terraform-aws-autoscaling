@@ -6,8 +6,9 @@ module "random_name" {
 }
 
 resource "aws_launch_template" "main" {
-  name          = "${module.random_name.name}"
-  image_id      = "${data.aws_ami.latest_service_image.id}"
+  name = "${module.random_name.name}"
+
+  # image_id      = "${data.aws_ami.latest_service_image.id}"
   instance_type = "${var.instance_type}"
 
   iam_instance_profile {
@@ -75,7 +76,7 @@ resource "aws_autoscaling_group" "main" {
   mixed_instances_policy {
     launch_template {
       launch_template_specification {
-        launch_template_id = "${aws_launch_template.example.id}"
+        launch_template_id = "${aws_launch_template.main.id}"
         version            = "$Latest"
       }
 
