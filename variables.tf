@@ -135,14 +135,7 @@ variable "asg_wait_for_elb_capacity" {
 variable "launch_template_overrides" {
   type = "list"
 
-  default = [
-    {
-      "instance_type" = "m5.large"
-    },
-    {
-      "instance_type" = "m4.large"
-    },
-  ]
+  default = []
 
   description = "List of nested arguments provides the ability to specify multiple instance types. See https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#override"
 }
@@ -170,7 +163,7 @@ variable "instance_type" {
 
 variable "image_filters" {
   type        = "list"
-  description = "The AMI search filters. The most recent AMI that pass this filter and have the correct Service & Product Domain tag values will be selected to be deployed to the ASG"
+  description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG"
 }
 
 variable "image_owners" {
