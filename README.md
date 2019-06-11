@@ -5,8 +5,8 @@ A terraform module which provisions an auto scaling group along with its launch 
  - the auto scaling group will have `Service`, `Cluster`, `Environment`, and `ProductDomain` tags by default, which are propagated to all instances it spawns
 
 ## Behaviour
-- Every time a new AMI is supplied (including first deployment), a new ASG will be created. If the deployment succeed, the old ASG will be destroyed.
-If the deployment failed because the ASG status is unhealthy, both the new and the old ASG will remain; if this new ASG is attached to an ALB target group, its instances should not receive traffic (as they are unhealthy). Subsequent failing deployments will add more unhealthy ASGs, and no ASG will be destroyed, but Terraform will state these ASGs as deposed. When a new healthy ASG is deployed, all old ASGs (the last healthy one and the subsequent unhealthy ones) will then be destroyed.
+- When the launch template parameter values are changed in the terraform code (e.g. a new image_filters is supplied), terraform will create a new launch template version, unless the new configuration is already the same as the latest version of the launch template (e.g. if the launch template is updated externally).
+- No rolling / blue green updates will be done automatically. It is assumed to be done externally
 
 ## Authors
   - [Salvian Reynaldi](https://github.com/salvianreynaldi)
