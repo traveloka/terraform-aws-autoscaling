@@ -132,6 +132,18 @@ variable "asg_wait_for_elb_capacity" {
   description = "Terraform will wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. If left to default, the value is set to asg_min_capacity"
 }
 
+variable "launch_template_overrides" {
+  type = "list"
+
+  default = [
+    {
+      "instance_type" = "m5.large"
+    },
+  ]
+
+  description = "List of nested arguments provides the ability to specify multiple instance types. See https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#override"
+}
+
 variable "security_groups" {
   type        = "list"
   description = "The spawned instances will have these security groups"

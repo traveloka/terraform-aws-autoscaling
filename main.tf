@@ -9,22 +9,17 @@ resource "aws_launch_template" "main" {
   name = "${module.random_name.name}"
 
   # image_id      = "${data.aws_ami.latest_service_image.id}"
-  instance_type = "${var.instance_type}"
 
   iam_instance_profile {
     name = "${var.instance_profile}"
   }
-
   key_name               = "${var.key_name}"
   vpc_security_group_ids = ["${var.security_groups}"]
   user_data              = "${var.user_data}"
-
   monitoring {
     enabled = "${var.monitoring}"
   }
-
   ebs_optimized = "${var.ebs_optimized}"
-
   block_device_mappings {
     device_name = "/dev/sda1"
 
@@ -34,7 +29,6 @@ resource "aws_launch_template" "main" {
       delete_on_termination = "${var.delete_on_termination}"
     }
   }
-
   tag_specifications = [
     {
       resource_type = "instance"
