@@ -170,8 +170,12 @@ variable "instance_type" {
 
 variable "image_filters" {
   type        = "list"
-  default     = []
   description = "The AMI search filters. The most recent AMI that pass this filter and have the correct Service & Product Domain tag values will be selected to be deployed to the ASG"
+}
+
+variable "image_owners" {
+  type        = "list"
+  description = "List of AMI owners to limit search. This becomes required starting terraform-provider-aws v2 (https://www.terraform.io/docs/providers/aws/guides/version-2-upgrade.html#owners-argument-now-required)"
 }
 
 variable "monitoring" {
