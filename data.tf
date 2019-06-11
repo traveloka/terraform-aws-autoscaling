@@ -5,7 +5,7 @@ data "aws_ami" "latest_service_image" {
 
   filter {
     name   = "name"
-    values = ["${var.image_name_filter}"]
+    values = ["${var.image_filter.name}"]
   }
 
   filter {
@@ -20,6 +20,6 @@ data "aws_ami" "latest_service_image" {
 
   filter {
     name   = "Tag:Status"
-    values = ["${var.image_status}"]
+    values = ["${var.image_filter.tag_status}"]
   }
 }

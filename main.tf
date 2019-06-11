@@ -12,8 +12,6 @@ resource "aws_launch_template" "main" {
 
   iam_instance_profile {
     name = "${var.instance_profile}"
-
-    // TODO switch to ARN, more specific
   }
 
   key_name               = "${var.key_name}"
@@ -35,6 +33,32 @@ resource "aws_launch_template" "main" {
       delete_on_termination = "${var.delete_on_termination}"
     }
   }
+
+  tag_specifications = [
+    {
+      resource_type = "instance"
+
+      tags = {
+        Name          = "${var.service_name}-${var.cluster_role}"
+        Service       = "${var.service_name}"
+        Cluster       = "${var.service_name}-${var.cluster_role}"
+        ProductDomain = "${var.product_domain}"
+        Application   = "${var.application}"
+        Environment   = "${var.environment}"
+        Description   = "${var.description}"
+        ManagedBy     = "terraform"
+      }
+    },
+    {
+      resource_type = "volume"
+
+      tags = {
+        Service       = "${var.service_name}"
+        ProductDomain = "${var.product_domain}"
+        Environment   = "${var.environment}"
+      }
+    },
+  ]
 }
 
 resource "aws_autoscaling_group" "main" {
@@ -54,6 +78,10 @@ resource "aws_autoscaling_group" "main" {
         launch_template_id = "${aws_launch_template.example.id}"
         version            = "$Latest"
       }
+
+      override = [
+        "${var.launch_template_overrides}",
+      ]
     }
   }
 
@@ -61,42 +89,27 @@ resource "aws_autoscaling_group" "main" {
     {
       key                 = "Name"
       value               = "${module.random_name.name}"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Service"
-      value               = "${var.service_name}"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Cluster"
-      value               = "${var.service_name}-${var.cluster_role}"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Environment"
-      value               = "${var.environment}"
-      propagate_at_launch = true
+      propagate_at_launch = false
     },
     {
       key                 = "ProductDomain"
       value               = "${var.product_domain}"
-      propagate_at_launch = true
+      propagate_at_launch = false
     },
     {
-      key                 = "Application"
-      value               = "${var.application}"
-      propagate_at_launch = true
+      key                 = "Environment"
+      value               = "${var.environment}"
+      propagate_at_launch = false
     },
     {
       key                 = "Description"
-      value               = "${var.description}"
-      propagate_at_launch = true
+      value               = "ASG of the ${var.service_name}-${var.cluster_role} cluster"
+      propagate_at_launch = false
     },
     {
       key                 = "ManagedBy"
       value               = "terraform"
-      propagate_at_launch = true
+      propagate_at_launch = false
     },
     "${var.asg_tags}",
   ]

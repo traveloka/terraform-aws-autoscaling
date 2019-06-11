@@ -118,7 +118,7 @@ variable "asg_termination_policies" {
 variable "asg_tags" {
   type        = "list"
   default     = []
-  description = "The created ASG (and spawned instances) will have these tags applied over the default ones (see main.tf)"
+  description = "The created ASG will have these tags applied over the default ones (see main.tf)"
 }
 
 variable "asg_wait_for_capacity_timeout" {
@@ -153,9 +153,9 @@ variable "instance_type" {
   description = "The spawned instances will have this type"
 }
 
-variable "image_name_filter" {
-  type        = "string"
-  description = "The AMI name filter. The ASG will be provisioned with the most recent AMI following this name filter"
+variable "image_filter" {
+  type        = "map"
+  description = "The AMI search filter. The most recent AMI that pass this filter and  have the correct Service & Product Domain tag values will be selected to be deployed to the ASG. Currently, only name and tag_status keys are supported"
 }
 
 variable "monitoring" {
