@@ -22,4 +22,6 @@ data "aws_ami" "latest_service_image" {
     name   = "tag:Status"
     values = ["${var.image_filter["tag_status"]}"]
   }
+
+  count = "${length(keys(var.image_filter)) == 0 ? 0 : 1}"
 }
