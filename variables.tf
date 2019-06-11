@@ -168,10 +168,10 @@ variable "instance_type" {
   description = "The spawned instances will have this type"
 }
 
-variable "image_filter" {
+variable "image_filters" {
   type        = "map"
   default     = {}
-  description = "The AMI search filter. The most recent AMI that pass this filter and  have the correct Service & Product Domain tag values will be selected to be deployed to the ASG. Currently, only name and tag_status keys are supported"
+  description = "The AMI search filters. The most recent AMI that pass this filter and have the correct Service & Product Domain tag values will be selected to be deployed to the ASG"
 }
 
 variable "monitoring" {
