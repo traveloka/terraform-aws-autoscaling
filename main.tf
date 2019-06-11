@@ -34,6 +34,14 @@ resource "aws_launch_template" "main" {
     }
   }
 
+  tags = {
+    Name          = "${module.random_name.name}"
+    Service       = "${var.service_name}"
+    ProductDomain = "${var.product_domain}"
+    Environment   = "${var.environment}"
+    ManagedBy     = "terraform"
+  }
+
   tag_specifications = [
     {
       resource_type = "instance"
@@ -90,6 +98,11 @@ resource "aws_autoscaling_group" "main" {
     {
       key                 = "Name"
       value               = "${module.random_name.name}"
+      propagate_at_launch = false
+    },
+    {
+      key                 = "Service"
+      value               = "${var.service_name}"
       propagate_at_launch = false
     },
     {
