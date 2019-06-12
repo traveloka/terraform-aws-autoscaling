@@ -137,10 +137,10 @@ variable "launch_template_overrides" {
 
   default = [
     {
-      "instance_type" = "m5.large"
+      "instance_type" = "c5.large"
     },
     {
-      "instance_type" = "m4.large"
+      "instance_type" = "c4.large"
     },
   ]
 
