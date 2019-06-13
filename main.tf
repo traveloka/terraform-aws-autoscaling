@@ -1,6 +1,7 @@
 locals {
   # Set the wait_for_elb_capacity to asg_min_capacity if not explicitly provided
   asg_wait_for_elb_capacity = "${var.asg_wait_for_elb_capacity == "" ? var.asg_min_capacity : var.asg_wait_for_elb_capacity}"
+  asg_desired_capacity      = "${var.asg_min_capacity > var.asg_desired_capacity ? var.asg_min_capacity : var.asg_desired_capacity}"
 }
 
 module "random_lc" {
@@ -41,6 +42,7 @@ resource "aws_autoscaling_group" "main" {
   name                      = "${aws_launch_configuration.main.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
+  desired_capacity          = "${local.asg_desired_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
   launch_configuration      = "${aws_launch_configuration.main.name}"
   health_check_grace_period = "${var.asg_health_check_grace_period}"

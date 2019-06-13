@@ -10,6 +10,7 @@ module "autoscaling-deployment" {
   product_domain          = "fprbe"
   description             = "fprbe instances"
   asg_min_capacity        = 2
+  asg_desired_capacity    = 1
   asg_vpc_zone_identifier = ["subnet-8270c222"]
 
   asg_tags = [
@@ -32,4 +33,5 @@ module "autoscaling-deployment" {
   lc_instance_profile           = ""
   lc_instance_type              = "t2.medium"
   lc_ami_id                     = "ami-9893cee4"
+  lc_user_data                  = " "
 }
