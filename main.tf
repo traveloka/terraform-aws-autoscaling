@@ -93,7 +93,7 @@ resource "aws_autoscaling_group" "main" {
       ]
     }
 
-    instances_distribution = "${var.mixed_instances_distribution}"
+    instances_distribution = ["${var.mixed_instances_distribution}"]
   }
 
   tags = [

@@ -210,7 +210,7 @@ variable "delete_on_termination" {
 
 variable "mixed_instances_distribution" {
   type        = "map"
-  description = ""
+  description = "Specify the distribution of on-demand instances and spot instances. See https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_InstancesDistribution.html"
 
   default = {
     on_demand_allocation_strategy            = "prioritized"
