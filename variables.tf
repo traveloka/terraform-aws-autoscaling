@@ -207,3 +207,17 @@ variable "delete_on_termination" {
   description = "Whether the volume should be destroyed on instance termination"
   default     = "true"
 }
+
+variable "mixed_instances_distribution" {
+  type        = "map"
+  description = ""
+
+  default = {
+    on_demand_allocation_strategy            = "prioritized"
+    on_demand_base_capacity                  = "0"
+    on_demand_percentage_above_base_capacity = "100"
+    spot_allocation_strategy                 = "lowest-price"
+    spot_instance_pools                      = "2"
+    spot_max_price                           = ""
+  }
+}

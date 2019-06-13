@@ -92,6 +92,8 @@ resource "aws_autoscaling_group" "main" {
         "${var.launch_template_overrides}",
       ]
     }
+
+    instances_distribution = "${var.mixed_instances_distribution}"
   }
 
   tags = [
