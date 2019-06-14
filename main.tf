@@ -122,7 +122,7 @@ resource "aws_autoscaling_group" "main" {
     }
   }
 
-  tags = [
+  tags = concat([
     {
       key                 = "Name"
       value               = "${module.asg_name.name}"
@@ -153,9 +153,7 @@ resource "aws_autoscaling_group" "main" {
       value               = "terraform"
       propagate_at_launch = false
     },
-  ]
-
-  tags = var.asg_tags
+  ], var.asg_tags)
 
   placement_group           = "${var.asg_placement_group}"
   metrics_granularity       = "${var.asg_metrics_granularity}"
