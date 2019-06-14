@@ -165,7 +165,7 @@ variable "key_name" {
 
 variable "image_filters" {
   type        = "list"
-  description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG"
+  description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG. See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html"
 }
 
 variable "image_owners" {
