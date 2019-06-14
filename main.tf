@@ -1,12 +1,30 @@
-module "random_name" {
+module "launch_template_name" {
   source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.16.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
 }
+module "asg_name" {
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.16.1"
+
+  name_prefix   = "${var.service_name}-${var.cluster_role}"
+  resource_type = "autoscaling_group"
+  keepers = {
+    image_id                  = "${data.aws_ami.latest_service_image.id}"
+    instance_profile          = "${var.instance_profile}"
+    key_name                  = "${var.key_name}"
+    security_groups           = "${join(",", sort(var.security_groups))}"
+    user_data                 = "${var.user_data}"
+    monitoring                = "${var.monitoring}"
+    ebs_optimized             = "${var.ebs_optimized}"
+    ebs_volume_size           = "${var.volume_size}"
+    ebs_volume_type           = "${var.volume_type}"
+    ebs_delete_on_termination = "${var.delete_on_termination}"
+  }
+}
 
 resource "aws_launch_template" "main" {
-  name = "${module.random_name.name}"
+  name = "${module.launch_template_name.name}"
 
   image_id = "${data.aws_ami.latest_service_image.id}"
 
@@ -35,7 +53,7 @@ resource "aws_launch_template" "main" {
   }
 
   tags = {
-    Name          = "${module.random_name.name}"
+    Name          = "${module.launch_template_name.name}"
     Service       = "${var.service_name}"
     ProductDomain = "${var.product_domain}"
     Environment   = "${var.environment}"
@@ -71,7 +89,7 @@ resource "aws_launch_template" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  name                      = "${module.random_name.name}"
+  name                      = "${module.asg_name.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
@@ -99,7 +117,7 @@ resource "aws_autoscaling_group" "main" {
   tags = [
     {
       key                 = "Name"
-      value               = "${module.random_name.name}"
+      value               = "${module.asg_name.name}"
       propagate_at_launch = false
     },
     {
