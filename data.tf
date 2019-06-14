@@ -6,8 +6,8 @@ data "aws_ami" "latest_service_image" {
   dynamic "filter" {
     for_each = var.image_filters
     content {
-      name   = lookup(condition.value, "name", null)
-      values = lookup(condition.value, "values", null)
+      name   = lookup(filter.value, "name", null)
+      values = lookup(filter.value, "values", null)
     }
   }
 }
