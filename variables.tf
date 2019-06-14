@@ -42,13 +42,13 @@ variable "asg_lb_target_group_arns" {
 
 variable "asg_min_capacity" {
   type        = "string"
-  default     = 0
+  default     = "0"
   description = "The created ASG will have this number of instances at minimum"
 }
 
 variable "asg_max_capacity" {
   type        = "string"
-  default     = 0
+  default     = "0"
   description = "The created ASG will have this number of instances at maximum"
 }
 
