@@ -29,9 +29,8 @@ module "asg" {
     },
   ]
 
-  instance_type = "m5.large"
-  user_data     = "echo starting fprbe"
-  key_name      = ""
+  user_data = "echo starting fprbe"
+  key_name  = ""
 
   asg_vpc_zone_identifier  = ["subnet-a2b50c9d", "subnet-718c9efe"]
   asg_lb_target_group_arns = []
