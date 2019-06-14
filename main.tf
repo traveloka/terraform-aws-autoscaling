@@ -136,4 +136,8 @@ resource "aws_autoscaling_group" "main" {
   wait_for_capacity_timeout = "${var.asg_wait_for_capacity_timeout}"
   wait_for_elb_capacity     = "${local.asg_wait_for_elb_capacity}"
   service_linked_role_arn   = "${var.asg_service_linked_role_arn}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
