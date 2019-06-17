@@ -17,13 +17,13 @@ module "asg" {
   image_owners = ["123456789012"]
 
   image_filters = [
-    # See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html for complete filter options
     {
+      # See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html for complete filter options
       name   = "name"
       values = ["traveloka-fprbe-app-*"]
     },
-    # If you want to directly specify the image ID
     {
+      # If you want to directly specify the image ID
       name   = "image-id"
       values = ["ami-91920591023019"]
     },

@@ -4,11 +4,13 @@ module "launch_template_name" {
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
 }
+
 module "asg_name" {
   source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.16.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "autoscaling_group"
+
   keepers = {
     image_id                  = "${data.aws_ami.latest_service_image.id}"
     instance_profile          = "${var.instance_profile}"
