@@ -38,7 +38,7 @@ resource "aws_launch_configuration" "main" {
 }
 
 resource "aws_autoscaling_group" "main" {
-  name                      = "${aws_launch_configuration.main.name}"
+  name_prefix               = "${aws_launch_configuration.main.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
