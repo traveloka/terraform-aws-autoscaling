@@ -23,7 +23,7 @@ There are many ways to contribute, from fixing typos or grammar error, improving
 
 If you find a security vulnerability, do NOT open an issue. Please e-mail maintainer instead.
 
-If you have noticed a bug or have a question, [search the issue tracker](https://github.com/traveloka/terraform-aws-bake-ami/issues?q=label%3Abug) first to see if someone else has already created a ticket. If it is not, then feel free to create one!
+If you have noticed a bug or have a question, [search the issue tracker](https://github.com/traveloka/terraform-aws-autoscaling/issues?q=label%3Abug) first to see if someone else has already created a ticket. If it is not, then feel free to create one!
 
 To create the issue ticket you can use **Bug Report** template. By using the template it is mandatory for you to fill all asked questions where relevant.
 
@@ -33,7 +33,7 @@ It is going to be awesome if you not only create an issue but also submit a pull
 
 ## ***"How to submit a feature request? I am sure this feature is also going to be useful for the community."***
 
-Just like submitting the bug, first you need to [search the issue tracker](https://github.com/traveloka/terraform-aws-bake-ami/issues?q=label%3Aenhancement) to see if someone else has already created a request. If such request not exists yet, go ahead and create one!
+Just like submitting the bug, first you need to [search the issue tracker](https://github.com/traveloka/terraform-aws-autoscaling/issues?q=label%3Aenhancement) to see if someone else has already created a request. If such request not exists yet, go ahead and create one!
 
 To create the issue ticket you can use **Feature Request** template. By using the template it is mandatory for you to fill all asked questions where relevant.
 

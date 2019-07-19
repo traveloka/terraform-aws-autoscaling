@@ -18,7 +18,7 @@ Fixes #0000
 
 ***
 
-Release note for [CHANGELOG](https://github.com/traveloka/terraform-aws-bake-ami/blob/master/CHANGELOG.md):
+Release note for [CHANGELOG](https://github.com/traveloka/terraform-aws-autoscaling/blob/master/CHANGELOG.md):
 <!--
 If the changes are not user facing, just write "NONE" in the release-note block below.
 -->
