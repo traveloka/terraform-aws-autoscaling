@@ -163,6 +163,12 @@ variable "key_name" {
   description = "The spawned instances will have this SSH key name"
 }
 
+variable "cpu_credits" {
+  type        = string
+  default     = "unlimited"
+  description = "The credit option for CPU usage, can be either 'standard' or 'unlimited'"
+}
+
 variable "image_filters" {
   type        = "list"
   description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG. See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html"

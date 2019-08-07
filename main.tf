@@ -32,6 +32,10 @@ resource "aws_launch_template" "main" {
     name = "${var.instance_profile}"
   }
 
+  credit_specification {
+    cpu_credits = var.cpu_credits
+  }
+
   key_name               = "${var.key_name}"
   vpc_security_group_ids = var.security_groups
   user_data              = "${base64encode(var.user_data)}"
