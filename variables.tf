@@ -158,7 +158,7 @@ variable "security_groups" {
   description = "The spawned instances will have these security groups"
 }
 
-variable "instance_profile" {
+variable "instance_profile_name" {
   type        = "string"
   description = "The spawned instances will have this IAM profile"
 }

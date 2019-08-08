@@ -13,7 +13,7 @@ module "asg_name" {
 
   keepers = {
     image_id                  = "${data.aws_ami.latest_service_image.id}"
-    instance_profile          = "${var.instance_profile}"
+    instance_profile          = "${var.instance_profile_name}"
     key_name                  = "${var.key_name}"
     security_groups           = "${join(",", sort(var.security_groups))}"
     user_data                 = "${var.user_data}"
@@ -31,7 +31,7 @@ resource "aws_launch_template" "main" {
   image_id = "${data.aws_ami.latest_service_image.id}"
 
   iam_instance_profile {
-    name = "${var.instance_profile}"
+    name = "${var.instance_profile_name}"
   }
 
   credit_specification {
