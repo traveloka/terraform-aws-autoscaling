@@ -1,3 +1,9 @@
+## v0.2.3 (Aug 29, 2019)
+
+NOTES:
+
+* Remove `executable_users` option from aws_ami data source (#31)
+
 ## v0.2.2 (Jun 28, 2019)
 
 NOTES:
