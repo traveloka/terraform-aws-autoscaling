@@ -8,7 +8,7 @@ module "asg" {
   application    = "java-8"
 
   security_groups  = ["${aws_security_group.fprbe-app.id}"]
-  instance_profile = "${module.instance_profile.instance_profile_id}"
+  instance_profile_name = "${module.instance_profile.instance_profile_id}"
 
   image_owners = ["${data.aws_caller_identity.current.account_id}"]
 
