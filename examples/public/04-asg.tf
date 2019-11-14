@@ -1,28 +1,26 @@
 module "asg" {
   source = "../../"
 
-  service_name        = "fprbe"
+  service_name        = "tpaybe"
   environment         = "staging"
-  product_domain      = "fpr"
-  description         = "Instances of fprbe-app"
+  product_domain      = "tpay"
+  description         = "Instances of tpaybe-app"
   application         = "java-8"
-  associate_public_ip = "true"
+  associate_public_ip = "false"
 
-  security_groups       = ["${aws_security_group.fprbe-app.id}"]
+  security_groups       = ["${aws_security_group.tpaybe-app.id}"]
   instance_profile_name = "${module.instance_profile.instance_profile_name}"
 
-  image_owners = ["${data.aws_caller_identity.current.account_id}"]
+  image_owners = ["099720109477"]
 
   image_filters = [
     {
-      # See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html for complete filter options
       name   = "name"
-      values = ["tvlk/ubuntu-16/tsi/java-8*"]
+      values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
     },
     {
-      # If you want to directly specify the image ID
-      name   = "image-id"
-      values = ["ami-0ee74cd429a4a5143"]
+      name   = "virtualization-type"
+      values = ["hvm"]
     },
   ]
 
