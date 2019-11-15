@@ -1,14 +1,14 @@
 module "asg" {
   source = "../../"
 
-  service_name        = "tpaybe"
+  service_name        = "paybe"
   environment         = "staging"
-  product_domain      = "tpay"
-  description         = "Instances of tpaybe-app"
+  product_domain      = "pay"
+  description         = "Instances of paybe-app"
   application         = "java-8"
   associate_public_ip = "false"
 
-  security_groups       = ["${aws_security_group.tpaybe-app.id}"]
+  security_groups       = ["${aws_security_group.paybe-app.id}"]
   instance_profile_name = "${module.instance_profile.instance_profile_name}"
 
   image_owners = ["099720109477"]
