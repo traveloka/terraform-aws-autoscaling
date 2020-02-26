@@ -225,6 +225,10 @@ variable "ebs_encryption" {
   default     = "false"
 }
 
+variable "associate_public_ip" {
+  description = "Whether to associate public IP to the instance"
+  default     = "false"
+}
 
 variable "mixed_instances_distribution" {
   type        = "map"
