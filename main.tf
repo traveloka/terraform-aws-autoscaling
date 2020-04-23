@@ -29,7 +29,7 @@ resource "aws_launch_template" "main" {
   name = module.launch_template_name.name
 
   image_id = data.aws_ami.latest_service_image.id
-
+  instance_type = var.use_mixed_instances_policy == true ? null : var.launch_template_overrides[0].instance_type
   iam_instance_profile {
     name = var.instance_profile_name
   }
