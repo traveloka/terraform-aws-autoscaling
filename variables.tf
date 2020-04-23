@@ -143,10 +143,10 @@ variable "launch_template_overrides" {
 
   default = [
     {
-      "instance_type" = "c5.large"
+      "instance_type" = "c4.large"
     },
     {
-      "instance_type" = "c4.large"
+      "instance_type" = "t3.medium"
     },
   ]
 
@@ -243,4 +243,3 @@ variable "mixed_instances_distribution" {
     spot_max_price                           = ""
   }
 }
-
