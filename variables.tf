@@ -176,7 +176,11 @@ variable "cpu_credits" {
 }
 
 variable "image_filters" {
-  type        = list(object(name=string,values=list(string)))
+  type = list(object({
+    name   = string,
+    values = list(string),
+    })
+  )
   description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG. See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html"
 }
 
