@@ -109,31 +109,43 @@ resource "aws_autoscaling_group" "main" {
   load_balancers            = var.asg_clb_names
   termination_policies      = var.asg_termination_policies
 
-  mixed_instances_policy {
-    launch_template {
-      launch_template_specification {
-        launch_template_id = aws_launch_template.main.id
-        version            = "$Latest"
-      }
 
-      dynamic "override" {
-        for_each = var.launch_template_overrides
-        content {
-          instance_type     = lookup(override.value, "instance_type", null)
-          weighted_capacity = lookup(override.value, "weighted_capacity", null)
+  dynamic "launch_template" {
+    for_each = var.use_mixed_instances_policy == false ? ["use plain launch template"] : []
+    content {
+      id      = aws_launch_template.main.id
+      version = "$Latest"
+    }
+  }
+
+  dynamic "mixed_instances_policy" {
+    for_each = var.use_mixed_instances_policy == true ? ["use mixed instance policy"] :  []
+    content {
+      launch_template {
+        launch_template_specification {
+          launch_template_id = aws_launch_template.main.id
+          version            = "$Latest"
+        }
+
+        dynamic "override" {
+          for_each = var.launch_template_overrides
+          content {
+            instance_type     = lookup(override.value, "instance_type", null)
+            weighted_capacity = lookup(override.value, "weighted_capacity", null)
+          }
         }
       }
-    }
 
-    dynamic "instances_distribution" {
-      for_each = [var.mixed_instances_distribution]
-      content {
-        on_demand_allocation_strategy            = lookup(instances_distribution.value, "on_demand_allocation_strategy", null)
-        on_demand_base_capacity                  = lookup(instances_distribution.value, "on_demand_base_capacity", null)
-        on_demand_percentage_above_base_capacity = lookup(instances_distribution.value, "on_demand_percentage_above_base_capacity", null)
-        spot_allocation_strategy                 = lookup(instances_distribution.value, "spot_allocation_strategy", null)
-        spot_instance_pools                      = lookup(instances_distribution.value, "spot_instance_pools", null)
-        spot_max_price                           = lookup(instances_distribution.value, "spot_max_price", null)
+      dynamic "instances_distribution" {
+        for_each = [var.mixed_instances_distribution]
+        content {
+          on_demand_allocation_strategy            = lookup(instances_distribution.value, "on_demand_allocation_strategy", null)
+          on_demand_base_capacity                  = lookup(instances_distribution.value, "on_demand_base_capacity", null)
+          on_demand_percentage_above_base_capacity = lookup(instances_distribution.value, "on_demand_percentage_above_base_capacity", null)
+          spot_allocation_strategy                 = lookup(instances_distribution.value, "spot_allocation_strategy", null)
+          spot_instance_pools                      = lookup(instances_distribution.value, "spot_instance_pools", null)
+          spot_max_price                           = lookup(instances_distribution.value, "spot_max_price", null)
+        }
       }
     }
   }

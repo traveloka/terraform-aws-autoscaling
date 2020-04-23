@@ -234,6 +234,12 @@ variable "associate_public_ip" {
   default     = "false"
 }
 
+variable "use_mixed_instances_policy" {
+  type = bool
+  description = "Whether to use ASG mixed instances policy or the plain launch template"
+  default     = true
+}
+
 variable "mixed_instances_distribution" {
   type        = map(string)
   description = "Specify the distribution of on-demand instances and spot instances. See https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_InstancesDistribution.html"
