@@ -139,7 +139,7 @@ variable "asg_wait_for_elb_capacity" {
 }
 
 variable "launch_template_overrides" {
-  type = list(string)
+  type = list(map(string))
 
   default = [
     {
@@ -176,7 +176,7 @@ variable "cpu_credits" {
 }
 
 variable "image_filters" {
-  type        = list(string)
+  type        = list(object)
   description = "The AMI search filters. The most recent AMI that pass this filter will be deployed to the ASG. See https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-images.html"
 }
 
