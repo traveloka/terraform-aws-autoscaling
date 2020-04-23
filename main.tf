@@ -117,7 +117,7 @@ resource "aws_autoscaling_group" "main" {
       }
 
       dynamic "override" {
-        for_each = [var.launch_template_overrides]
+        for_each = var.launch_template_overrides
         content {
           instance_type     = lookup(override.value, "instance_type", null)
           weighted_capacity = lookup(override.value, "weighted_capacity", null)
@@ -138,39 +138,41 @@ resource "aws_autoscaling_group" "main" {
     }
   }
 
-  tags = [
-    {
-      key                 = "Name"
-      value               = module.asg_name.name
-      propagate_at_launch = false
-    },
-    {
-      key                 = "Service"
-      value               = var.service_name
-      propagate_at_launch = false
-    },
-    {
-      key                 = "ProductDomain"
-      value               = var.product_domain
-      propagate_at_launch = false
-    },
-    {
-      key                 = "Environment"
-      value               = var.environment
-      propagate_at_launch = false
-    },
-    {
-      key                 = "Description"
-      value               = "ASG of the ${var.service_name}-${var.cluster_role} cluster"
-      propagate_at_launch = false
-    },
-    {
-      key                 = "ManagedBy"
-      value               = "terraform"
-      propagate_at_launch = false
-    },
-    var.asg_tags,
-  ]
+  tags = concat(
+    list(
+      {
+        key                 = "Name"
+        value               = module.asg_name.name
+        propagate_at_launch = false
+      },
+      {
+        key                 = "Service"
+        value               = var.service_name
+        propagate_at_launch = false
+      },
+      {
+        key                 = "ProductDomain"
+        value               = var.product_domain
+        propagate_at_launch = false
+      },
+      {
+        key                 = "Environment"
+        value               = var.environment
+        propagate_at_launch = false
+      },
+      {
+        key                 = "Description"
+        value               = "ASG of the ${var.service_name}-${var.cluster_role} cluster"
+        propagate_at_launch = false
+      },
+      {
+        key                 = "ManagedBy"
+        value               = "terraform"
+        propagate_at_launch = false
+      }
+    ),
+    var.asg_tags
+  )
 
   placement_group           = var.asg_placement_group
   metrics_granularity       = var.asg_metrics_granularity

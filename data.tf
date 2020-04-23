@@ -3,7 +3,7 @@ data "aws_ami" "latest_service_image" {
   most_recent = true
 
   dynamic "filter" {
-    for_each = [var.image_filters]
+    for_each = var.image_filters
     content {
       name   = filter.value.name
       values = filter.value.values
