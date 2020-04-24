@@ -150,7 +150,10 @@ variable "launch_template_overrides" {
     },
   ]
 
-  description = "List of nested arguments provides the ability to specify multiple instance types. See https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#override"
+  description = """
+  List of nested arguments provides the ability to specify multiple instance types. See https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#override
+  When using plain launch template, the first element's instance_type will be used as the launch template instance type.
+  """
 }
 
 variable "security_groups" {
