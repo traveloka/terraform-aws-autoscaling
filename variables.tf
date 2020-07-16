@@ -256,3 +256,9 @@ variable "mixed_instances_distribution" {
     spot_max_price                           = ""
   }
 }
+
+variable "disable_api_termination" {
+  type        = bool
+  description = "whether to protect your instance from accidently being terminated from console or api"
+  default     = false
+}

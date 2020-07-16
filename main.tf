@@ -50,6 +50,7 @@ resource "aws_launch_template" "main" {
     enabled = var.monitoring
   }
 
+  disable_api_termination = var.disable_api_termination
   ebs_optimized = var.ebs_optimized
 
   block_device_mappings {
