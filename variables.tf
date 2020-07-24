@@ -256,3 +256,8 @@ variable "mixed_instances_distribution" {
     spot_max_price                           = ""
   }
 }
+
+variable "delete_network_interface_on_termination" {
+  description = "Whether the network interface will be deleted on termination"
+  default     = "true"
+}

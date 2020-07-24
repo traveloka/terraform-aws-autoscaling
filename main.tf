@@ -43,7 +43,8 @@ resource "aws_launch_template" "main" {
 
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip
-    security_groups = var.security_groups
+    security_groups             = var.security_groups
+    delete_on_termination       = var.delete_network_interface_on_termination
   }
 
   monitoring {
