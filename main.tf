@@ -38,8 +38,8 @@ resource "aws_launch_template" "main" {
     cpu_credits = var.cpu_credits
   }
 
-  key_name               = var.key_name
-  user_data              = base64encode(var.user_data)
+  key_name  = var.key_name
+  user_data = base64encode(var.user_data)
 
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip
