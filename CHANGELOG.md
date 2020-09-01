@@ -1,4 +1,4 @@
-## v0.2.4 (Aug 10, 2020)
+## v0.2.4 (Sep 01, 2020)
 
 NOTES:
 * Add .pre-commit-config.yaml to include terraform_fmt and terraform_docs
