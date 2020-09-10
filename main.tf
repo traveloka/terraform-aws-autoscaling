@@ -124,7 +124,7 @@ resource "aws_autoscaling_group" "main" {
   tags = [
     {
       key                 = "Name"
-      value               = "${module.asg_name.name}"
+      value               = "${var.service_name}-${var.cluster_role}"
       propagate_at_launch = false
     },
     {
