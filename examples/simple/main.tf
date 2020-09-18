@@ -12,7 +12,8 @@ module "autoscaling-deployment" {
   asg_min_capacity        = 2
   asg_vpc_zone_identifier = ["subnet-8270c222"]
 
-  asg_tags = [
+  asg_tags = concat(
+   list(
     {
       key                 = "AmiId"
       value               = "ami-9893cee4"
@@ -22,8 +23,9 @@ module "autoscaling-deployment" {
       key                 = "ServiceVersion"
       value               = "0.1.0"
       propagate_at_launch = true
-    },
-  ]
+    }
+   ),
+  )
 
   asg_health_check_grace_period = 30
   asg_health_check_type         = "EC2"
@@ -33,3 +35,4 @@ module "autoscaling-deployment" {
   lc_instance_type              = "t2.medium"
   lc_ami_id                     = "ami-9893cee4"
 }
+
