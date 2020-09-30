@@ -192,4 +192,3 @@ variable "delete_on_termination" {
   description = "Whether the volume should be destroyed on instance termination"
   default     = "true"
 }
-

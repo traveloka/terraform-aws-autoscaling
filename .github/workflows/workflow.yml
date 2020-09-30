@@ -1,0 +1,15 @@
+name: Automated Actions
+
+on: [issues]
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Adding the issue to a project
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        uses: alex-page/github-project-automation-plus@v0.1.1
+        with:
+          project: Curated Terraform Modules
+          column: To do
+          repo-token: ${{ secrets.GH_PAT }}
