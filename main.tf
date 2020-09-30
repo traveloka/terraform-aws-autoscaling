@@ -39,11 +39,11 @@ resource "aws_launch_template" "main" {
   }
 
   key_name               = "${var.key_name}"
-  vpc_security_group_ids = ["${var.security_groups}"]
   user_data              = "${base64encode(var.user_data)}"
 
   network_interfaces {
     associate_public_ip_address = "${var.associate_public_ip}"
+    security_groups = ["${var.security_groups}"]
   }
 
   monitoring {
