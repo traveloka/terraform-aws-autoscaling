@@ -38,12 +38,14 @@ resource "aws_launch_template" "main" {
     cpu_credits = "${var.cpu_credits}"
   }
 
-  key_name               = "${var.key_name}"
-  vpc_security_group_ids = ["${var.security_groups}"]
-  user_data              = "${base64encode(var.user_data)}"
+  key_name  = "${var.key_name}"
+  user_data = "${base64encode(var.user_data)}"
 
   network_interfaces {
     associate_public_ip_address = "${var.associate_public_ip}"
+    security_groups             = ["${var.security_groups}"]
+    delete_on_termination       = "${var.eni_delete_on_termination}"
+    description                 = "${module.asg_name.name} ENI"
   }
 
   monitoring {
@@ -59,7 +61,7 @@ resource "aws_launch_template" "main" {
       volume_size           = "${var.volume_size}"
       volume_type           = "${var.volume_type}"
       delete_on_termination = "${var.delete_on_termination}"
-      encrypted            = "${var.ebs_encryption}"
+      encrypted             = "${var.ebs_encryption}"
     }
   }
 

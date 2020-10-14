@@ -220,6 +220,11 @@ variable "delete_on_termination" {
   default     = "true"
 }
 
+variable "eni_delete_on_termination" {
+  description = "Whether the network interface should be destroyed on instance termination"
+  default     = "true"
+}
+
 variable "ebs_encryption" {
   description = "Whether the volume will be encrypted or not"
   default     = "false"
