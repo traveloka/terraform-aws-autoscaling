@@ -1,12 +1,12 @@
 module "launch_template_name" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.18.1"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "launch_configuration"
 }
 
 module "asg_name" {
-  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.18.1"
+  source = "github.com/traveloka/terraform-aws-resource-naming.git?ref=v0.19.1"
 
   name_prefix   = "${var.service_name}-${var.cluster_role}"
   resource_type = "autoscaling_group"
@@ -38,12 +38,13 @@ resource "aws_launch_template" "main" {
     cpu_credits = var.cpu_credits
   }
 
-  key_name               = var.key_name
-  user_data              = base64encode(var.user_data)
+  key_name  = var.key_name
+  user_data = base64encode(var.user_data)
 
   network_interfaces {
     associate_public_ip_address = var.associate_public_ip
-    security_groups = var.security_groups
+    security_groups             = var.security_groups
+    delete_on_termination       = var.delete_network_interface_on_termination
   }
 
   monitoring {
