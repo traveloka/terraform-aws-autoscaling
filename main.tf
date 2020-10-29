@@ -12,16 +12,13 @@ module "asg_name" {
   resource_type = "autoscaling_group"
 
   keepers = {
-    image_id                  = data.aws_ami.latest_service_image.id
-    instance_profile          = var.instance_profile_name
-    key_name                  = var.key_name
-    security_groups           = join(",", sort(var.security_groups))
-    user_data                 = var.user_data
-    monitoring                = var.monitoring
-    ebs_optimized             = var.ebs_optimized
-    ebs_volume_size           = var.volume_size
-    ebs_volume_type           = var.volume_type
-    ebs_delete_on_termination = var.delete_on_termination
+    image_id         = data.aws_ami.latest_service_image.id
+    instance_profile = var.instance_profile_name
+    key_name         = var.key_name
+    security_groups  = join(",", sort(var.security_groups))
+    user_data        = var.user_data
+    monitoring       = var.monitoring
+    ebs_optimized    = var.ebs_optimized
   }
 }
 
@@ -41,10 +38,17 @@ resource "aws_launch_template" "main" {
   key_name  = var.key_name
   user_data = base64encode(var.user_data)
 
-  network_interfaces {
-    associate_public_ip_address = var.associate_public_ip
-    security_groups             = var.security_groups
-    delete_on_termination       = var.delete_network_interface_on_termination
+  // if we need to associate the public IP, then the SGs need to be passed in
+  // the network_interfaces block below
+  vpc_security_group_ids = length(var.security_groups) == 0 || var.associate_public_ip ? null : var.security_groups
+
+  dynamic "network_interfaces" {
+    for_each = var.associate_public_ip ? [1] : []
+    content {
+      associate_public_ip_address = var.associate_public_ip
+      security_groups             = var.security_groups
+      delete_on_termination       = var.eni_delete_on_termination
+    }
   }
 
   monitoring {
@@ -54,14 +58,20 @@ resource "aws_launch_template" "main" {
   disable_api_termination = var.disable_api_termination
   ebs_optimized = var.ebs_optimized
 
-  block_device_mappings {
-    device_name = "/dev/sda1"
+  dynamic "block_device_mappings" {
+    for_each = var.block_device_mappings
+    content {
+      device_name = lookup(block_device_mappings.value, "device_name")
 
-    ebs {
-      volume_size           = var.volume_size
-      volume_type           = var.volume_type
-      delete_on_termination = var.delete_on_termination
-      encrypted             = var.ebs_encryption
+      ebs {
+        volume_size           = lookup(block_device_mappings.value, "volume_size", "8")
+        volume_type           = lookup(block_device_mappings.value, "volume_type", "gp2")
+        delete_on_termination = lookup(block_device_mappings.value, "delete_on_termination", true)
+
+        ## This is where we apply encryption to the ebs block device. Only if it is an A or B confidentiality account
+        encrypted  = lookup(block_device_mappings.value, "encrypted", local.use_encryption)
+        kms_key_id = lookup(block_device_mappings.value, "kms_key_id", local.use_encryption ? data.aws_ssm_parameter.key_arn[0].value : null)
+      }
     }
   }
 

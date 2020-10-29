@@ -210,27 +210,23 @@ variable "user_data" {
   description = "The spawned instances will have this user data. Use the rendered value of a terraform's `template_cloudinit_config` data" // https://www.terraform.io/docs/providers/template/d/cloudinit_config.html#rendered
 }
 
-variable "volume_size" {
-  description = "The size of the volume in gigabytes"
-  type        = string
-  default     = "8"
+variable "block_device_mappings" {
+  type        = list(map(string))
+  description = "Contains the description of the disk volumes attached to each instance launched by the ASG"
+  # List of items like this:
+  # {
+  #  device_name = "/dev/xvda"
+  #  volume_size = "30"    (default: 8, measurment unit is GiB)
+  #  volume_type = "gp2"   (default: gp2, can be standard, gp2, or io1)
+  #  delete_on_termination = false (default: true)
+  #  encrypted = false (default: dynamic, set based on confidentiality level of
+  #                              the account, but you can override it if you want)
+  #  kms_key_id = ARN (default: dynamic, set based on confidentiality level of
+  #                             the account, set null when setting encrypted to false,
+  #                             you can also override it if you want)
+  # }
 }
 
-variable "volume_type" {
-  description = "The type of volume. Can be standard, gp2, or io1"
-  type        = string
-  default     = "gp2"
-}
-
-variable "delete_on_termination" {
-  description = "Whether the volume should be destroyed on instance termination"
-  default     = "true"
-}
-
-variable "ebs_encryption" {
-  description = "Whether the volume will be encrypted or not"
-  default     = "false"
-}
 
 variable "associate_public_ip" {
   description = "Whether to associate public IP to the instance"
