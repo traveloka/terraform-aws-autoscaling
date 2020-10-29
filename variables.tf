@@ -227,6 +227,10 @@ variable "block_device_mappings" {
   # }
 }
 
+variable "encryption_key_arn" {
+  description = "ARN of the KMS encryption key to be used for encrypting the EBS volumes"
+  default     = "false"
+}
 
 variable "associate_public_ip" {
   description = "Whether to associate public IP to the instance"
@@ -257,7 +261,7 @@ variable "disable_api_termination" {
   type        = bool
   description = "whether to protect your instance from accidently being terminated from console or api"
   default     = false
-} 
+}
 
 variable "delete_network_interface_on_termination" {
   description = "Whether the network interface will be deleted on termination"

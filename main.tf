@@ -56,7 +56,7 @@ resource "aws_launch_template" "main" {
   }
 
   disable_api_termination = var.disable_api_termination
-  ebs_optimized = var.ebs_optimized
+  ebs_optimized           = var.ebs_optimized
 
   dynamic "block_device_mappings" {
     for_each = var.block_device_mappings
@@ -70,7 +70,7 @@ resource "aws_launch_template" "main" {
 
         ## This is where we apply encryption to the ebs block device. Only if it is an A or B confidentiality account
         encrypted  = lookup(block_device_mappings.value, "encrypted", local.use_encryption)
-        kms_key_id = lookup(block_device_mappings.value, "kms_key_id", local.use_encryption ? data.aws_ssm_parameter.key_arn[0].value : null)
+        kms_key_id = lookup(block_device_mappings.value, "kms_key_id", local.use_encryption ? var.encryption_key_arn : null)
       }
     }
   }
