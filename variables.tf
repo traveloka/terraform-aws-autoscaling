@@ -221,15 +221,8 @@ variable "block_device_mappings" {
   #  delete_on_termination = false (default: true)
   #  encrypted = false (default: dynamic, set based on confidentiality level of
   #                              the account, but you can override it if you want)
-  #  kms_key_id = ARN (default: dynamic, set based on confidentiality level of
-  #                             the account, set null when setting encrypted to false,
-  #                             you can also override it if you want)
+  #  kms_key_id = ARN of the KMS encryption key to be used to encrypt the volume
   # }
-}
-
-variable "encryption_key_arn" {
-  description = "ARN of the KMS encryption key to be used for encrypting the EBS volumes"
-  default     = "false"
 }
 
 variable "associate_public_ip" {

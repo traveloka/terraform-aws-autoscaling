@@ -70,7 +70,7 @@ resource "aws_launch_template" "main" {
 
         ## This is where we apply encryption to the ebs block device. Only if it is an A or B confidentiality account
         encrypted  = lookup(block_device_mappings.value, "encrypted", false)
-        kms_key_id = lookup(block_device_mappings.value, "kms_key_id", var.encryption_key_arn)
+        kms_key_id = lookup(block_device_mappings.value, "kms_key_id", null)
       }
     }
   }
