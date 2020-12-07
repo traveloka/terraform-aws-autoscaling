@@ -1,5 +1,5 @@
 module "asg" {
-  source = "../../"
+  source              = "../../"
   service_name        = "fprbe"
   environment         = "staging"
   product_domain      = "fpr"
@@ -38,6 +38,18 @@ module "asg" {
     },
     {
       "instance_type" = "t3.large"
+    },
+  ]
+
+  additional_tags = {
+    Team = "fpr-tdm"
+  }
+
+  asg_tags = [
+    {
+      key                 = "Team"
+      value               = "fpr-tdm"
+      propagate_at_launch = false
     },
   ]
 }

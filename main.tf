@@ -65,38 +65,38 @@ resource "aws_launch_template" "main" {
     }
   }
 
-  tags = {
-    Name          = "${module.launch_template_name.name}"
-    Service       = "${var.service_name}"
-    ProductDomain = "${var.product_domain}"
-    Environment   = "${var.environment}"
-    ManagedBy     = "terraform"
-  }
+  tags = "${merge(var.additional_tags, map(
+          "Name", module.launch_template_name.name,
+          "Service", var.service_name,
+          "ProductDomain", var.product_domain,
+          "Environment", var.environment,
+          "ManagedBy", "terraform",
+           ))}"
 
   tag_specifications = [
     {
       resource_type = "instance"
 
-      tags = {
-        Name          = "${var.service_name}-${var.cluster_role}"
-        Service       = "${var.service_name}"
-        Cluster       = "${var.service_name}-${var.cluster_role}"
-        ProductDomain = "${var.product_domain}"
-        Application   = "${var.application}"
-        Environment   = "${var.environment}"
-        Description   = "${var.description}"
-        ManagedBy     = "terraform"
-      }
+      tags = "${merge(var.additional_tags, map(
+             	"Name", "${var.service_name}-${var.cluster_role}",
+              "Service", var.service_name,
+              "Cluster", "${var.service_name}-${var.cluster_role}",
+              "ProductDomain", var.product_domain,
+              "Application", var.application,
+              "Environment", var.environment,
+              "Description", var.description,
+              "ManagedBy", "terraform"
+              ))}"
     },
     {
       resource_type = "volume"
 
-      tags = {
-        Service       = "${var.service_name}"
-        ProductDomain = "${var.product_domain}"
-        Environment   = "${var.environment}"
-        ManagedBy     = "terraform"
-      }
+      tags = "${merge(var.additional_tags, map(
+              "Service", var.service_name,
+              "ProductDomain", var.product_domain,
+              "Environment", var.environment,
+              "ManagedBy", "terraform"
+              ))}"
     },
   ]
 }

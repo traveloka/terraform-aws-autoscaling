@@ -248,3 +248,9 @@ variable "mixed_instances_distribution" {
     spot_max_price                           = ""
   }
 }
+
+variable "additional_tags" {
+  type        = "map"
+  default     = {}
+  description = "The created resources (Launch Template, EC2 and Volume) will have these tags and will combine with default tags (see main.tf)"
+}
