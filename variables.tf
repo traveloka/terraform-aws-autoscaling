@@ -248,3 +248,8 @@ variable "mixed_instances_distribution" {
     spot_max_price                           = ""
   }
 }
+
+variable "asg_desired_capacity" {
+  description = "What is the current desired count that you want to have"
+  default     = "-1"  
+}
