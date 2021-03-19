@@ -254,3 +254,8 @@ variable "additional_tags" {
   default     = {}
   description = "The created resources (Launch Template, EC2 and Volume) will have these tags and will combine with default tags (see main.tf)"
 }
+
+variable "asg_desired_capacity" {
+  description = "What is the current desired count that you want to have"
+  default     = "-1"  
+}

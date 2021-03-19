@@ -105,6 +105,7 @@ resource "aws_autoscaling_group" "main" {
   name_prefix               = "${module.asg_name.name}"
   max_size                  = "${var.asg_max_capacity}"
   min_size                  = "${var.asg_min_capacity}"
+  desired_capacity          = "${local.desired_capacity}"
   default_cooldown          = "${var.asg_default_cooldown}"
   health_check_grace_period = "${var.asg_health_check_grace_period}"
   health_check_type         = "${var.asg_health_check_type}"
