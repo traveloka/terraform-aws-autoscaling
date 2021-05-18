@@ -143,10 +143,10 @@ variable "launch_template_overrides" {
 
   default = [
     {
-      "instance_type" = "c4.large"
+      instance_type = "c4.large"
     },
     {
-      "instance_type" = "t3.medium"
+      instance_type = "t3.medium"
     },
   ]
 
@@ -261,7 +261,7 @@ variable "disable_api_termination" {
   type        = bool
   description = "whether to protect your instance from accidently being terminated from console or api"
   default     = false
-} 
+}
 
 variable "delete_network_interface_on_termination" {
   description = "Whether the network interface will be deleted on termination"

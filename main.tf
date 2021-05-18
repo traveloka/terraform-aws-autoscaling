@@ -52,7 +52,7 @@ resource "aws_launch_template" "main" {
   }
 
   disable_api_termination = var.disable_api_termination
-  ebs_optimized = var.ebs_optimized
+  ebs_optimized           = var.ebs_optimized
 
   block_device_mappings {
     device_name = "/dev/sda1"
